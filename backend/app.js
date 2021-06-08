@@ -27,5 +27,5 @@ mongoose.connect('mongodb+srv://Achille_Deribreux:Achille-11032@cluster0.ft4m9.m
 
 //
 app.use('/api/auth', userRoutes)
-app.use('/api', sauceRoutes);
+app.use('/api/sauces', sauceRoutes);
 module.exports = app;//exporte l'application pour pourvoir l'utiliser depuis les autres fichiers tels que le serveur node
