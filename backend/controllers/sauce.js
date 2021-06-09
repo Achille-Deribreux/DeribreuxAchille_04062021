@@ -1,5 +1,6 @@
 const Sauce = require('../models/sauce');
 const fs = require('fs');
+const user = require('../models/user');
 
 exports.createSauce = (req,res,next) => {
     const sauceObject = JSON.parse(req.body.sauce);
@@ -53,3 +54,37 @@ exports.displaySauces = (req,res,next)=>{
       })
         .catch(error => res.status(500).json({ error }));
   }
+
+  exports.like = (req, res, next)=>{
+    const like = req.body.like;
+    const userId = req.body.userId;
+
+    if (like == 1){
+      Sauce.updateOne({_id: req.params.id}, {$addToSet: {usersLiked : userId}, $inc : {likes : +1}})
+        .then(()=>res.status(200).json({message:"aime la sauce!"}))
+        .catch(error => res.status(400).json({ error }));
+
+    }else if(like == -1){
+      Sauce.updateOne({_id: req.params.id}, {$addToSet: {usersDisliked : userId}, $inc : {dislikes : +1}})
+        .then(()=>res.status(200).json({message:"n'aime pas la sauce!"}))
+        .catch(error => res.status(400).json({ error }));
+
+    }else{
+      Sauce.findOne({_id: req.params.id})
+        .then(sauce =>{
+          if (sauce.usersLiked.includes(userId)){
+            Sauce.updateOne({_id: req.params.id}, {$pull: {usersLiked : userId}, $inc : {likes : -1}})
+              .then(()=>res.status(200).json({message:"Avis annulé"}))
+              .catch(error => res.status(400).json({ error }));
+
+          }else if(sauce.usersDisliked.includes(userId)){
+            Sauce.updateOne({_id: req.params.id}, {$pull: {usersDisliked : userId}, $inc : {dislikes : -1}})
+              .then(()=>res.status(200).json({message:"Avis annulé !"}))
+              .catch(error => res.status(400).json({ error }));
+              
+          }
+        })
+        .catch(error => res.status(400).json({ error }));
+    }
+  }
+  // Pourquoi req.params.id et pas userId ? 
