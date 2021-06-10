@@ -5,9 +5,10 @@ const path = require('path');
 const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 const helmet = require('helmet');
+require('dotenv').config();
 
 //Connection à mongoDB
-mongoose.connect('mongodb+srv://Achille_Deribreux:NUfalRdD2cy3Y6zP@cluster0.ft4m9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://'+process.env.DB_USER+':'+process.env.DB_PWD+'@'+process.env.DB_ADRESS,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
