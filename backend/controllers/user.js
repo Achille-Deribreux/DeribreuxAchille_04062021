@@ -1,3 +1,4 @@
+//Import
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -31,7 +32,7 @@ exports.login = (req, res, next)=>{
                     userId : user._id,
                     token: jwt.sign(
                         { userId: user._id },
-                        'RANDOM_TOKEN_SECRET',
+                        'RANDOM_TOKEN_SECRET',//Clé secrète, à changer en prod
                         { expiresIn: '24h' }
                       )
                 });
