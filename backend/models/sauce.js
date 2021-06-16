@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 
 //Création du modèle
 const sauceSchema = mongoose.Schema({
-//_id créé par mongo DB
     userId : {type : String},
     name : {type : String},
     manufacturer: {type : String},

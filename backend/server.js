@@ -1,7 +1,8 @@
 // Imports 
-const http = require('http');
-const app = require('./app');
+const http = require('http'); //Import http
+const app = require('./app'); //Import app
 
+//Retourne un port valide
 const normalizePort = val => {
     const port = parseInt(val, 10);
   
@@ -13,11 +14,12 @@ const normalizePort = val => {
     }
     return false;
   };
-
+//Ajout du port de connection, s'il n'est pas déclaré par l'environnement on utilise le port 3000
 const port = normalizePort(process.env.PORT || '3000');
 
-app.set('port', port);
+app.set('port', port); //Set du port de connection
 
+//Recherche les différentes erreurs et les gère de manière appropriée
 const errorHandler = error => {
     if (error.syscall !== 'listen') {
       throw error;
@@ -35,9 +37,10 @@ const errorHandler = error => {
         throw error;
     }
   };
-  
+  //Création du serveur
   const server = http.createServer(app);
   
+//Au lancement du serveur, lance errorHandler pour la gestion d'erreur
   server.on('error', errorHandler);
   server.on('listening', () => {
     const address = server.address();
@@ -45,4 +48,5 @@ const errorHandler = error => {
     console.log('Listening on ' + bind);
   });
   
+  //Serveur écoute le port définit dans la const port (environnement ou 3000)
   server.listen(port);

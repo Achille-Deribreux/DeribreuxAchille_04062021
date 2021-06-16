@@ -1,7 +1,9 @@
+//Imports
 const Sauce = require('../models/sauce');
 const fs = require('fs');
 const user = require('../models/user');
 
+//Méthode pour créer une sauce
 exports.createSauce = (req,res,next) => {
     const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
@@ -19,18 +21,21 @@ exports.createSauce = (req,res,next) => {
       .catch((error) => res.status(400).json({ error }))
   };
 
+  //Méthode pour afficher les sauces
 exports.displaySauces = (req,res,next)=>{
     Sauce.find()
     .then((sauces) => res.status(200).json(sauces))
     .catch((error) => res.status(400).json({ error }));
   };
 
+  //Méthode pour afficher une sauce
   exports.displaySauce = (req, res, next)=>{
       Sauce.findOne({_id: req.params.id})
       .then((sauce) => res.status(200).json(sauce))
       .catch((error) => res.status(400).json({ error }));
   }
 
+  //Méthode pour modifier une sauce
   exports.modifySauce = (req, res, next)=>{
     const sauceObject = req.file ?
     {
@@ -42,6 +47,7 @@ exports.displaySauces = (req,res,next)=>{
     .catch(error => res.status(400).json({ error }));
   }
 
+  //Méthode pour supprimer une sauce
   exports.deleteSauce = (req, res , next)=>{
     Sauce.findOne({_id: req.params.id})
     .then(sauce => {
@@ -55,6 +61,7 @@ exports.displaySauces = (req,res,next)=>{
         .catch(error => res.status(500).json({ error }));
   }
 
+  //Méthode pour like/dislike une sauce
   exports.like = (req, res, next)=>{
     const like = req.body.like;
     const userId = req.body.userId;
@@ -87,4 +94,3 @@ exports.displaySauces = (req,res,next)=>{
         .catch(error => res.status(400).json({ error }));
     }
   }
-  // Pourquoi req.params.id et pas userId ? => 
