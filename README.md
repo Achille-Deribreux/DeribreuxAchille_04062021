@@ -38,12 +38,21 @@ Run project :
 </h3>
 
 <h5>1° In /backend : </h5>
+
 ``` $ npm install  ```
+
 <h5>2° In /frontend : </h5>
+
 ``` $ npm install  ```
+
 <h5>3° Put .env file in /backend</h5>
+
 <h5>4° In /backend : </h5>
+
 ``` $ node server.js  ```
+
 <h5>5° In /frontend : </h5>
+
 ``` $ npm run start  ```
+
 <br>
